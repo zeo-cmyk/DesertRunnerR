@@ -1,0 +1,41 @@
+using UnityEngine;
+
+public class Camera_ControllerNew : MonoBehaviour
+{
+    [Header("Follow")]
+    public Transform target;
+    public Vector3 offset = new Vector3(0f, 4.2f, -8.5f);
+    public float lookHeight = 1.4f;
+    public float followSpeed = 8f;
+    public float lookSpeed = 10f;
+
+    Vector3 currentVelocity;
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (target == null)
+        {
+            PlayerRunner player = FindFirstObjectByType<PlayerRunner>();
+            if (player != null)
+                target = player.transform;
+        }
+
+        if (target != null)
+            transform.position = target.position + offset;
+    }
+
+    void LateUpdate()
+    {
+        if (target == null) return;
+
+        Vector3 desired = target.position + offset;
+        transform.position = Vector3.SmoothDamp(transform.position, desired, ref currentVelocity, 1f / followSpeed);
+
+        Vector3 lookPoint = target.position + Vector3.up * lookHeight;
+        Quaternion lookRot = Quaternion.LookRotation(lookPoint - transform.position, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, lookSpeed * Time.deltaTime);
+    }
+}
