@@ -114,11 +114,20 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
 
+        ApplyMobileRuntimeSettings();
 
         Cursor.lockState =
             CursorLockMode.None;
 
         Cursor.visible = true;
+    }
+
+
+    static void ApplyMobileRuntimeSettings()
+    {
+        QualitySettings.SetQualityLevel(0, true);
+        Application.targetFrameRate = 60;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
 
