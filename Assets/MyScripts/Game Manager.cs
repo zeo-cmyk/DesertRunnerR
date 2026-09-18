@@ -18,8 +18,13 @@ public class GameManager : MonoBehaviour
     [Tooltip("Assign your 3 different Environment Patch prefabs.")]
     public GameObject[] envPatchPrefabs = new GameObject[3];
 
-    [Tooltip("Assign your PLAYER PREFAB here. Do NOT assign the player from the scene.")]
+    [Tooltip("Assign your PLAYER PREFAB here. Do NOT assign the player from the scene. Used if Player Prefabs is empty.")]
     public GameObject playerPrefab;
+
+    [Tooltip("Character prefabs matching the Main Menu previews. Index 0 = character 1, index 1 = character 2, etc.")]
+    public GameObject[] playerPrefabs;
+
+    public const string SelectedPlayerPrefKey = "SelectedPlayerIndex";
 
     [Tooltip("Edit this prefab, then place copies inside each Env Patch.")]
     public GameObject coinPrefab;
@@ -216,10 +221,12 @@ public class GameManager : MonoBehaviour
         // CHECK PLAYER PREFAB
         // -----------------------------------------------------
 
-        if (playerPrefab == null)
+        GameObject prefabToSpawn = GetSelectedPlayerPrefab();
+
+        if (prefabToSpawn == null)
         {
             Debug.LogError(
-                "GameManager: Player Prefab is NOT assigned."
+                "GameManager: No player prefab found for the selected character."
             );
 
             return;
@@ -283,7 +290,7 @@ public class GameManager : MonoBehaviour
 
         GameObject playerObject =
             Instantiate(
-                playerPrefab,
+                prefabToSpawn,
                 firstPatchSpawnPoint.position,
                 firstPatchSpawnPoint.rotation
             );
@@ -291,7 +298,7 @@ public class GameManager : MonoBehaviour
 
         // Give the instantiated player a clear name.
         playerObject.name =
-            playerPrefab.name;
+            prefabToSpawn.name;
 
 
         // -----------------------------------------------------
@@ -516,6 +523,66 @@ public class GameManager : MonoBehaviour
                 patchLength +
                 patchLength * 0.5f;
         }
+    }
+
+
+    // =========================================================
+    // SELECTED PLAYER
+    // =========================================================
+
+    public static int GetSelectedPlayerIndex()
+    {
+        return PlayerPrefs.GetInt(SelectedPlayerPrefKey, 0);
+    }
+
+
+    public static void SetSelectedPlayerIndex(int index)
+    {
+        PlayerPrefs.SetInt(
+            SelectedPlayerPrefKey,
+            Mathf.Max(0, index)
+        );
+
+        PlayerPrefs.Save();
+    }
+
+
+    GameObject GetSelectedPlayerPrefab()
+    {
+        int selectedIndex =
+            GetSelectedPlayerIndex();
+
+
+        if (
+            playerPrefabs != null &&
+            playerPrefabs.Length > 0
+        )
+        {
+            selectedIndex =
+                Mathf.Clamp(
+                    selectedIndex,
+                    0,
+                    playerPrefabs.Length - 1
+                );
+
+
+            if (playerPrefabs[selectedIndex] != null)
+            {
+                return playerPrefabs[selectedIndex];
+            }
+
+
+            for (int i = 0; i < playerPrefabs.Length; i++)
+            {
+                if (playerPrefabs[i] != null)
+                {
+                    return playerPrefabs[i];
+                }
+            }
+        }
+
+
+        return playerPrefab;
     }
 
 

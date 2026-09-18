@@ -9,12 +9,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3211218
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.3211218
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3211218
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.764588
+      value: 0.5961448
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.26811028
+      value: -0.29817152
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7925194272692349311, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2073acdd1ca0bad42ae00fb5729d370f, type: 2}
     - target: {fileID: 919132149155446097, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
       propertyPath: m_Name
       value: Player 5
@@ -60,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: af5b66814551f714392a2e09d8156195, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 32e986fd508ea5442a45623f8b08425e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -125,10 +141,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.28
-  m_Height: 1
+  m_Radius: 0.14210235
+  m_Height: 1.054055
   m_Direction: 1
-  m_Center: {x: 0, y: 0.55, z: 0.15}
+  m_Center: {x: 0, y: 0.5229726, z: 0.01210235}
 --- !u!114 &7770230827492453681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,7 +161,7 @@ MonoBehaviour:
   speedGainPerSecond: 0.25
   maxRunSpeed: 18
   startLane: 1
-  laneWidth: 8
+  laneWidth: 3.5
   laneChangeSpeed: 14
   laneChangeSound: {fileID: 8300000, guid: ca1b339513458df4fbc90d433e0d55d3, type: 3}
   jumpForce: 7.5

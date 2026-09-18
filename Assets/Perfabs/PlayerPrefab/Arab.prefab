@@ -95,7 +95,7 @@ MonoBehaviour:
   speedGainPerSecond: 0.25
   maxRunSpeed: 18
   startLane: 1
-  laneWidth: 8
+  laneWidth: 3.5
   laneChangeSpeed: 14
   laneChangeSound: {fileID: 8300000, guid: ca1b339513458df4fbc90d433e0d55d3, type: 3}
   jumpForce: 7.5
