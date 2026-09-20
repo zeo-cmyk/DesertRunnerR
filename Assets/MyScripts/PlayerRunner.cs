@@ -74,7 +74,6 @@ public class PlayerRunner : MonoBehaviour
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
 
-        // Setup AudioSource component automatically
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -91,6 +90,11 @@ public class PlayerRunner : MonoBehaviour
         }
 
         currentLane = Mathf.Clamp(startLane, 0, 2);
+
+        // Adjust run speeds based on the difficulty multiplier selected in MainMenu
+        float speedMultiplier = PlayerPrefs.GetFloat("GameSpeedMultiplier", 1.0f);
+        runSpeed *= speedMultiplier;
+        maxRunSpeed *= speedMultiplier;
 
         SetMoveAnim(AnimIdle);
     }
@@ -116,25 +120,21 @@ public class PlayerRunner : MonoBehaviour
             return;
 
         runSpeed = Mathf.Min(
-        maxRunSpeed,
-        runSpeed + speedGainPerSecond * Time.deltaTime
+            maxRunSpeed,
+            runSpeed + speedGainPerSecond * Time.deltaTime
         );
 
-        if (Input.GetKeyDown(KeyCode.A) ||
-        Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             ChangeLane(-1);
         }
 
-        if (Input.GetKeyDown(KeyCode.D) ||
-        Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             ChangeLane(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) ||
-        Input.GetKeyDown(KeyCode.W) ||
-        Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             TryJump();
         }
@@ -158,8 +158,8 @@ public class PlayerRunner : MonoBehaviour
         swipeArmed = false;
 
         Vector2 delta = new Vector2(
-        Input.mousePosition.x - swipeStartX,
-        Input.mousePosition.y - swipeStartY
+            Input.mousePosition.x - swipeStartX,
+            Input.mousePosition.y - swipeStartY
         );
 
         if (delta.magnitude < 80f)
@@ -179,7 +179,6 @@ public class PlayerRunner : MonoBehaviour
     {
         int nextLane = Mathf.Clamp(currentLane + dir, 0, 2);
 
-        // Play lane change sound if lane actually changes
         if (nextLane != currentLane)
         {
             currentLane = nextLane;
@@ -197,14 +196,14 @@ public class PlayerRunner : MonoBehaviour
             return;
 
         rb.linearVelocity = new Vector3(
-        rb.linearVelocity.x,
-        0f,
-        rb.linearVelocity.z
+            rb.linearVelocity.x,
+            0f,
+            rb.linearVelocity.z
         );
 
         rb.AddForce(
-        Vector3.up * jumpForce,
-        ForceMode.Impulse
+            Vector3.up * jumpForce,
+            ForceMode.Impulse
         );
 
         isGrounded = false;
@@ -222,9 +221,9 @@ public class PlayerRunner : MonoBehaviour
         if (isDead)
         {
             rb.linearVelocity = new Vector3(
-            0f,
-            rb.linearVelocity.y,
-            0f
+                0f,
+                rb.linearVelocity.y,
+                0f
             );
 
             return;
@@ -233,25 +232,25 @@ public class PlayerRunner : MonoBehaviour
         float targetX = (currentLane - 1) * laneWidth;
 
         float newX = Mathf.MoveTowards(
-        rb.position.x,
-        targetX,
-        laneChangeSpeed * Time.fixedDeltaTime
+            rb.position.x,
+            targetX,
+            laneChangeSpeed * Time.fixedDeltaTime
         );
 
         float zSpeed = isRunning ? runSpeed : 0f;
 
         rb.linearVelocity = new Vector3(
-        0f,
-        rb.linearVelocity.y,
-        zSpeed
+            0f,
+            rb.linearVelocity.y,
+            zSpeed
         );
 
         rb.MovePosition(
-        new Vector3(
-        newX,
-        rb.position.y,
-        rb.position.z
-        )
+            new Vector3(
+                newX,
+                rb.position.y,
+                rb.position.z
+            )
         );
 
         rb.MoveRotation(Quaternion.identity);
@@ -293,12 +292,10 @@ public class PlayerRunner : MonoBehaviour
         Vector3 startPosition = rb.position;
 
         Vector3 targetPosition =
-        startPosition -
-        Vector3.forward * hitBackwardDistance;
+            startPosition - Vector3.forward * hitBackwardDistance;
 
         float duration =
-        hitBackwardDistance /
-        Mathf.Max(hitBackwardSpeed, 0.01f);
+            hitBackwardDistance / Mathf.Max(hitBackwardSpeed, 0.01f);
 
         float elapsed = 0f;
 
@@ -306,18 +303,16 @@ public class PlayerRunner : MonoBehaviour
         {
             elapsed += Time.fixedDeltaTime;
 
-            float t = Mathf.Clamp01(
-            elapsed / duration
-            );
+            float t = Mathf.Clamp01(elapsed / duration);
 
             t = Mathf.SmoothStep(0f, 1f, t);
 
             rb.MovePosition(
-            Vector3.Lerp(
-            startPosition,
-            targetPosition,
-            t
-            )
+                Vector3.Lerp(
+                    startPosition,
+                    targetPosition,
+                    t
+                )
             );
 
             yield return new WaitForFixedUpdate();
@@ -336,14 +331,12 @@ public class PlayerRunner : MonoBehaviour
         if (other == null)
             return false;
 
-        if (obstacleLayers.value != 0 &&
-        ((1 << other.layer) & obstacleLayers) != 0)
+        if (obstacleLayers.value != 0 && ((1 << other.layer) & obstacleLayers) != 0)
         {
             return true;
         }
 
-        return !string.IsNullOrEmpty(obstacleTag) &&
-        other.CompareTag(obstacleTag);
+        return !string.IsNullOrEmpty(obstacleTag) && other.CompareTag(obstacleTag);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -356,8 +349,7 @@ public class PlayerRunner : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        if (isDead ||
-        Time.time < groundCheckUnlockTime)
+        if (isDead || Time.time < groundCheckUnlockTime)
         {
             return;
         }
@@ -384,10 +376,7 @@ public class PlayerRunner : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.SetInteger(
-            MoveHash,
-            state
-            );
+            animator.SetInteger(MoveHash, state);
         }
     }
 }
