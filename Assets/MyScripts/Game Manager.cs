@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         ApplyMobileRuntimeSettings();
+        GameSettings.ApplySound();
 
         Cursor.lockState =
             CursorLockMode.None;
@@ -350,6 +351,9 @@ public class GameManager : MonoBehaviour
         // -----------------------------------------------------
         // LOG
         // -----------------------------------------------------
+
+        GameSettings.ApplyDifficultyToPlayer(player);
+        GameSettings.ApplySound();
 
         Debug.Log(
             "GameManager: Player instantiated at FIRST patch SpawnPoint."
