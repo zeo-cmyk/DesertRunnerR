@@ -30,6 +30,10 @@ public class MainMenu : MonoBehaviour
     public Toggle soundToggle;
     public Button settingsBackButton;
 
+    [Header("Character Select")]
+    public Button leftArrowButton;
+    public Button rightArrowButton;
+
     [Header("Loading")]
     public TMP_Text loadingText;
     public float loadingDuration = 3.5f;
@@ -125,7 +129,7 @@ public class MainMenu : MonoBehaviour
             uiFont = loadingText.font;
 
         CachePreviewCharacters();
-        EnsureArrowButtons();
+        CacheArrowButtons();
     }
 
     void CachePreviewCharacters()
@@ -185,6 +189,8 @@ public class MainMenu : MonoBehaviour
         BindClick(lowDifficultyButton, () => SetDifficulty(DifficultyLevel.Low));
         BindClick(mediumDifficultyButton, () => SetDifficulty(DifficultyLevel.Medium));
         BindClick(hardDifficultyButton, () => SetDifficulty(DifficultyLevel.Hard));
+        BindClick(leftArrowButton, OnArrowLeft);
+        BindClick(rightArrowButton, OnArrowRight);
         WireSoundToggle();
     }
 
@@ -253,8 +259,18 @@ public class MainMenu : MonoBehaviour
         SetScreen(characterSelectScreen, true);
 
         StretchCharacterSelect();
-        EnsureArrowButtons();
+        CacheArrowButtons();
         ShowPreview(previewIndex);
+    }
+
+    public void OnArrowLeft()
+    {
+        StepPreview(-1);
+    }
+
+    public void OnArrowRight()
+    {
+        StepPreview(1);
     }
 
     public void SelectCurrentCharacter()
@@ -425,12 +441,22 @@ public class MainMenu : MonoBehaviour
 
     void StepPreview(int direction)
     {
-        int count = PreviewCount();
-
-        if (count <= 0)
+        if (previewCharacters == null || previewCharacters.Length == 0)
             return;
 
-        previewIndex = (previewIndex + direction + count) % count;
+        int length = previewCharacters.Length;
+        int steps = 0;
+
+        do
+        {
+            previewIndex = (previewIndex + direction + length) % length;
+            steps++;
+        }
+        while (previewCharacters[previewIndex] == null && steps < length);
+
+        if (previewCharacters[previewIndex] == null)
+            return;
+
         ShowPreview(previewIndex);
     }
 
@@ -439,10 +465,12 @@ public class MainMenu : MonoBehaviour
         if (previewCharacters == null)
             return;
 
+        previewIndex = Mathf.Clamp(index, 0, previewCharacters.Length - 1);
+
         for (int i = 0; i < previewCharacters.Length; i++)
         {
             if (previewCharacters[i] != null)
-                previewCharacters[i].SetActive(i == index);
+                previewCharacters[i].SetActive(i == previewIndex);
         }
     }
 
@@ -463,85 +491,45 @@ public class MainMenu : MonoBehaviour
         if (previewCharacters == null)
             return 0;
 
-        int count = 0;
-
-        for (int i = 0; i < previewCharacters.Length; i++)
-        {
-            if (previewCharacters[i] != null)
-                count++;
-        }
-
-        return count;
+        return previewCharacters.Length;
     }
 
     int ClampPreviewIndex(int index)
     {
-        int count = PreviewCount();
-
-        if (count <= 0)
+        if (previewCharacters == null || previewCharacters.Length == 0)
             return 0;
 
-        return Mathf.Clamp(index, 0, count - 1);
+        return Mathf.Clamp(index, 0, previewCharacters.Length - 1);
     }
 
-    void EnsureArrowButtons()
+    void CacheArrowButtons()
     {
         if (characterSelectScreen == null)
             return;
 
-        if (characterSelectScreen.transform.Find("ArrowLeft") != null)
-            return;
+        if (leftArrowButton == null)
+        {
+            Transform left = characterSelectScreen.transform.Find("ArrowLeft");
+            if (left != null)
+                leftArrowButton = left.GetComponent<Button>();
+        }
 
-        CreateArrowButton(
-            "ArrowLeft",
-            "<",
-            new Vector2(0f, 0.5f),
-            new Vector2(80f, 0f),
-            -1
-        );
+        if (rightArrowButton == null)
+        {
+            Transform right = characterSelectScreen.transform.Find("ArrowRight");
+            if (right != null)
+                rightArrowButton = right.GetComponent<Button>();
+        }
 
-        CreateArrowButton(
-            "ArrowRight",
-            ">",
-            new Vector2(1f, 0.5f),
-            new Vector2(-80f, 0f),
-            1
-        );
-    }
+        // Clear inspector OnClick duplicates, then bind once from code.
+        if (leftArrowButton != null)
+            leftArrowButton.onClick.RemoveAllListeners();
 
-    void CreateArrowButton(
-        string objectName,
-        string label,
-        Vector2 anchor,
-        Vector2 anchoredPosition,
-        int direction
-    )
-    {
-        GameObject buttonObject = new GameObject(
-            objectName,
-            typeof(RectTransform),
-            typeof(CanvasRenderer),
-            typeof(Image),
-            typeof(Button)
-        );
+        if (rightArrowButton != null)
+            rightArrowButton.onClick.RemoveAllListeners();
 
-        buttonObject.transform.SetParent(characterSelectScreen.transform, false);
-
-        RectTransform rect = buttonObject.GetComponent<RectTransform>();
-        rect.anchorMin = anchor;
-        rect.anchorMax = anchor;
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = anchoredPosition;
-        rect.sizeDelta = new Vector2(110f, 110f);
-
-        Image image = buttonObject.GetComponent<Image>();
-        image.color = new Color(1f, 1f, 1f, 0.9f);
-
-        Button button = buttonObject.GetComponent<Button>();
-        int step = direction;
-        button.onClick.AddListener(() => StepPreview(step));
-
-        CreateLabel(buttonObject.transform, "Label", label, 72f, new Color(0.15f, 0.15f, 0.15f, 1f));
+        BindClick(leftArrowButton, OnArrowLeft);
+        BindClick(rightArrowButton, OnArrowRight);
     }
 
     void EnsureSettingsScreen()

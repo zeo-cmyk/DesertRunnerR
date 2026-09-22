@@ -55,10 +55,16 @@ public class GameManager : MonoBehaviour
     [Tooltip("Your Game Over Screen GameObject from the Canvas.")]
     public GameObject gameOverScreen;
 
-    [Tooltip("TMP text that displays the final coin score.")]
+    [Tooltip("TMP text that displays the final score on Game Over.")]
     public TMP_Text gameOverScoreText;
 
-    [Tooltip("Your own Coins HUD TMP text from the Canvas.")]
+    [Tooltip("HUD Score text (increases while running).")]
+    public TMP_Text hudScoreText;
+
+    [Tooltip("HUD Coins text (increases when picking coins).")]
+    public TMP_Text hudCoinsText;
+
+    [HideInInspector]
     public TMP_Text hudText;
 
 
@@ -87,6 +93,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("Ground Y position.")]
     public float groundY = 1.375f;
 
+    [Header("Score")]
+    [Tooltip("Score points gained per meter of forward running.")]
+    public float scorePerMeter = 1f;
+
 
     // =========================================================
     // INTERNAL VARIABLES
@@ -103,6 +113,10 @@ public class GameManager : MonoBehaviour
     float farthestPatchZ;
 
     int coins;
+
+    int score;
+
+    float runStartZ;
 
     bool gameStarted;
 
@@ -680,7 +694,31 @@ public class GameManager : MonoBehaviour
 
         RecyclePatches();
 
+        UpdateRunScore();
+
         RefreshHud();
+    }
+
+
+    // =========================================================
+    // RUN SCORE
+    // =========================================================
+
+    void UpdateRunScore()
+    {
+        if (player == null)
+            return;
+
+        float distance =
+            Mathf.Max(
+                0f,
+                player.transform.position.z - runStartZ
+            );
+
+        score =
+            Mathf.FloorToInt(
+                distance * scorePerMeter
+            );
     }
 
 
@@ -831,30 +869,44 @@ public class GameManager : MonoBehaviour
 
 
         // -----------------------------------------------------
-        // HUD
+        // HUD SCORE + COINS
         // -----------------------------------------------------
 
-        if (hudText == null)
+        if (hudScoreText == null)
         {
             Transform found =
-                canvas.transform.Find(
-                    "HudCoins"
-                );
-
+                canvas.transform.Find("Score");
 
             if (found != null)
             {
-                hudText =
+                hudScoreText =
                     found.GetComponent<TMP_Text>();
             }
         }
 
+        if (hudCoinsText == null)
+        {
+            Transform found =
+                canvas.transform.Find("Coins");
 
-        if (hudText == null)
+            if (found != null)
+            {
+                hudCoinsText =
+                    found.GetComponent<TMP_Text>();
+            }
+        }
+
+        // Legacy field fallback
+        if (hudCoinsText == null && hudText != null)
+            hudCoinsText = hudText;
+
+        if (hudScoreText == null && hudText != null)
+            hudScoreText = hudText;
+
+        if (hudScoreText == null || hudCoinsText == null)
         {
             Debug.LogWarning(
-                "GameManager: HUD Text is not assigned. " +
-                "Drag your Coins TMP text into the Hud Text field."
+                "GameManager: Assign HUD Score and Coins TMP texts."
             );
         }
     }
@@ -872,6 +924,10 @@ public class GameManager : MonoBehaviour
 
         coins = 0;
 
+        score = 0;
+
+        runStartZ = 0f;
+
 
         if (startScreen != null)
         {
@@ -885,13 +941,8 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (hudText != null)
-        {
-            hudText.text =
-                "Coins  0";
-
-            hudText.gameObject.SetActive(false);
-        }
+        SetHudVisible(false);
+        RefreshHud();
     }
 
 
@@ -912,6 +963,15 @@ public class GameManager : MonoBehaviour
 
         gameStarted = true;
 
+        score = 0;
+        coins = 0;
+
+        if (player != null)
+        {
+            runStartZ =
+                player.transform.position.z;
+        }
+
 
         if (startScreen != null)
         {
@@ -919,13 +979,8 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (hudText != null)
-        {
-            hudText.gameObject.SetActive(true);
-
-            hudText.text =
-                "Coins  " + coins;
-        }
+        SetHudVisible(true);
+        RefreshHud();
 
 
         if (player != null)
@@ -1048,7 +1103,8 @@ public class GameManager : MonoBehaviour
         if (gameOverScoreText != null)
         {
             gameOverScoreText.text =
-                "Coins  " + coins;
+                "Score  " + score +
+                "\nCoins  " + coins;
         }
 
 
@@ -1081,10 +1137,7 @@ public class GameManager : MonoBehaviour
         // HIDE HUD
         // -----------------------------------------------------
 
-        if (hudText != null)
-        {
-            hudText.gameObject.SetActive(false);
-        }
+        SetHudVisible(false);
 
 
         // -----------------------------------------------------
@@ -1114,12 +1167,56 @@ public class GameManager : MonoBehaviour
     // HUD
     // =========================================================
 
+    void SetHudVisible(bool visible)
+    {
+        if (hudScoreText != null)
+            hudScoreText.gameObject.SetActive(visible);
+
+        if (hudCoinsText != null)
+            hudCoinsText.gameObject.SetActive(visible);
+
+        if (hudText != null &&
+            hudText != hudScoreText &&
+            hudText != hudCoinsText)
+        {
+            hudText.gameObject.SetActive(visible);
+        }
+    }
+
     void RefreshHud()
     {
-        if (hudText != null)
+        if (hudScoreText != null)
+        {
+            hudScoreText.text =
+                "Score  " + score;
+        }
+
+        if (hudCoinsText != null)
+        {
+            hudCoinsText.text =
+                "Coins  " + coins;
+        }
+        else if (hudText != null)
         {
             hudText.text =
                 "Coins  " + coins;
         }
+    }
+
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+     public GameObject pauseMenu;
+    public void PausedGame(){
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+    }
+
+    public void ResumeGame(){
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
     }
 }
