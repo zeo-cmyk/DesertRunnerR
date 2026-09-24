@@ -43,6 +43,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: pizza patch
       objectReference: {fileID: 0}
+    - target: {fileID: 3180024670191001022, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 26.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6378435606138267385, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 33.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114263780480984611, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8213657743388868632, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.0738034
@@ -83,6 +95,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8296159741283211022, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 28.75
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1337767474995649759, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
     - {fileID: 5011526734840109973, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
@@ -91,6 +107,7 @@ PrefabInstance:
     - {fileID: 6750230579567010347, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
     - {fileID: 7053707287947747258, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
     - {fileID: 8441494719992168820, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
+    - {fileID: 3098767110951402141, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8213657743388868632, guid: ef53cc30ecf33fd4584ff627c177e6d8, type: 3}

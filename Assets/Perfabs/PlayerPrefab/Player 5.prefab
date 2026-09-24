@@ -164,7 +164,7 @@ MonoBehaviour:
   laneWidth: 3.5
   laneChangeSpeed: 14
   laneChangeSound: {fileID: 8300000, guid: ca1b339513458df4fbc90d433e0d55d3, type: 3}
-  jumpForce: 7.5
+  jumpForce: 6
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 64

@@ -695,7 +695,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -804,18 +805,23 @@ MonoBehaviour:
   - {fileID: 6247434442446937719, guid: 589cfee29ff2a0441af880163ef84c98, type: 3}
   - {fileID: 3004073878259439826, guid: 162d24d74758d764d8efad275f7de4a7, type: 3}
   playerPrefab: {fileID: 1999220904317132216, guid: 73efd32b94297eb429f83274b63db828, type: 3}
+  playerPrefabs: []
   coinPrefab: {fileID: 3450051701243646909, guid: 53bf51d42d722f642afc0ae6cda204a6, type: 3}
   obstaclePrefab: {fileID: 4348819226628646785, guid: 795c6f9c0319023409bfc5101e9a9c06, type: 3}
   player: {fileID: 7871808413552198284, guid: 73efd32b94297eb429f83274b63db828, type: 3}
   startScreen: {fileID: 1850045476}
   gameOverScreen: {fileID: 92482933}
   gameOverScoreText: {fileID: 1382431455}
+  hudScoreText: {fileID: 0}
+  hudCoinsText: {fileID: 0}
   hudText: {fileID: 500645056}
   SFX: {fileID: 1879914728}
   pickCoin: {fileID: 8300000, guid: cee549e55416b9d4687de71b650740ef, type: 3}
   GameoverClip: {fileID: 8300000, guid: 564531fc5cf6b3b41822fccb21547fda, type: 3}
   patchLength: 40
   groundY: 1.375
+  scorePerMeter: 1
+  pauseMenu: {fileID: 0}
 --- !u!4 &229749439
 Transform:
   m_ObjectHideFlags: 0
@@ -1149,7 +1155,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4c2dfd424de170442b35f00e2869f06e, type: 2}
   m_sharedMaterial: {fileID: 9158414822647848578, guid: 4c2dfd424de170442b35f00e2869f06e, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 9158414822647848578, guid: 4c2dfd424de170442b35f00e2869f06e, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1442,7 +1449,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1579,7 +1587,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -2153,7 +2162,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -2504,7 +2514,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3281,7 +3292,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
