@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   envPatchPrefabs:
-  - {fileID: 668088361335588945, guid: eb9c7d31c9c85d948b5f2baabb0b97f9, type: 3}
+  - {fileID: 668088361335588945, guid: 53a170f861f2da8498e504bd18ea6c21, type: 3}
   - {fileID: 668088361335588945, guid: eb9c7d31c9c85d948b5f2baabb0b97f9, type: 3}
   - {fileID: 1739681470889262192, guid: 162d24d74758d764d8efad275f7de4a7, type: 3}
   playerPrefab: {fileID: 7116733157093184592, guid: 4fd4097057b7ae14c859e82778005d1f, type: 3}
@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 410087042}
   m_Layer: 0
   m_Name: Directional Light
-  m_TagString: Untagged
+  m_TagString: Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -857,7 +857,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.07
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

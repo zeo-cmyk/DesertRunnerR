@@ -22,7 +22,7 @@ public class CaveLightingController : MonoBehaviour
     {
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
         RenderSettings.ambientLight = outsideAmbient;
-
+        sunLight = GameObject.FindGameObjectWithTag("Light").GetComponent<Light>();
         if (sunLight != null)
         {
             sunLight.intensity = outsideIntensity;

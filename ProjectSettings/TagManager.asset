@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - wall
   - Obstacle
+  - Light
   layers:
   - Default
   - TransparentFX

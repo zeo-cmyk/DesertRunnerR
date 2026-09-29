@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arab
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 39b6bc4b92d8e4b4b95c2f1e2ae1899f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 39b6bc4b92d8e4b4b95c2f1e2ae1899f, type: 3}
       propertyPath: m_Controller
       value: 
