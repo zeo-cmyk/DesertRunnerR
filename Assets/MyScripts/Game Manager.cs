@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Prefabs")]
 
-    [Tooltip("Assign your 3 different Environment Patch prefabs.")]
+    [Tooltip("Assign your Environment Patch prefabs. Index 0 = Environment 0, Index 1 = Environment 1, etc.")]
     public GameObject[] envPatchPrefabs = new GameObject[3];
 
     [Tooltip("Assign your PLAYER PREFAB here. Do NOT assign the player from the scene. Used if Player Prefabs is empty.")]
@@ -25,6 +26,11 @@ public class GameManager : MonoBehaviour
     public GameObject[] playerPrefabs;
 
     public const string SelectedPlayerPrefKey = "SelectedPlayerIndex";
+
+    // PlayerPrefs key for environment selection.
+    // 0 = envPatchPrefabs[0]
+    // 1 = envPatchPrefabs[1]
+    public const string SelectedEnvironmentPrefKey = "SelectedEnvironmentIndex";
 
     [Tooltip("Edit this prefab, then place copies inside each Env Patch.")]
     public GameObject coinPrefab;
@@ -105,10 +111,8 @@ public class GameManager : MonoBehaviour
     readonly List<EnvironmentPatch> patches =
         new List<EnvironmentPatch>();
 
-
     // This stores the spawn point ONLY from the FIRST patch.
     Transform firstPatchSpawnPoint;
-
 
     float farthestPatchZ;
 
@@ -123,6 +127,9 @@ public class GameManager : MonoBehaviour
     bool isGameOver;
 
     TMP_FontAsset uiFont;
+
+    // The environment selected from PlayerPrefs.
+    int selectedEnvironmentIndex;
 
 
     // =========================================================
@@ -140,6 +147,18 @@ public class GameManager : MonoBehaviour
             CursorLockMode.None;
 
         Cursor.visible = true;
+
+        // -----------------------------------------------------
+        // LOAD ENVIRONMENT FROM PLAYERPREFS
+        // -----------------------------------------------------
+
+        selectedEnvironmentIndex =
+            GetSelectedEnvironmentIndex();
+
+        Debug.Log(
+            "GameManager: Selected Environment Index = " +
+            selectedEnvironmentIndex
+        );
     }
 
 
@@ -190,7 +209,6 @@ public class GameManager : MonoBehaviour
         GameObject found =
             GameObject.Find(objectName);
 
-
         if (found != null)
         {
             found.SetActive(false);
@@ -210,13 +228,11 @@ public class GameManager : MonoBehaviour
                 FindObjectsSortMode.None
             );
 
-
         if (texts.Length > 0)
         {
             uiFont =
                 texts[0].font;
         }
-
 
         if (uiFont == null)
         {
@@ -269,7 +285,6 @@ public class GameManager : MonoBehaviour
         EnvironmentPatch firstPatch =
             patches[0];
 
-
         if (firstPatch == null)
         {
             Debug.LogError(
@@ -286,7 +301,6 @@ public class GameManager : MonoBehaviour
 
         firstPatchSpawnPoint =
             firstPatch.GetSpawnPoint();
-
 
         if (firstPatchSpawnPoint == null)
         {
@@ -310,7 +324,6 @@ public class GameManager : MonoBehaviour
                 firstPatchSpawnPoint.rotation
             );
 
-
         // Give the instantiated player a clear name.
         playerObject.name =
             prefabToSpawn.name;
@@ -323,13 +336,11 @@ public class GameManager : MonoBehaviour
         player =
             playerObject.GetComponent<PlayerRunner>();
 
-
         if (player == null)
         {
             player =
                 playerObject.GetComponentInChildren<PlayerRunner>();
         }
-
 
         if (player == null)
         {
@@ -350,7 +361,6 @@ public class GameManager : MonoBehaviour
 
         Rigidbody rb =
             playerObject.GetComponent<Rigidbody>();
-
 
         if (rb != null)
         {
@@ -405,21 +415,64 @@ public class GameManager : MonoBehaviour
 
 
         // -----------------------------------------------------
+        // LOAD ENVIRONMENT INDEX FROM PLAYERPREFS
+        // -----------------------------------------------------
+
+        selectedEnvironmentIndex =
+            GetSelectedEnvironmentIndex();
+
+
+        // -----------------------------------------------------
+        // GET SELECTED ENVIRONMENT PREFAB
+        // -----------------------------------------------------
+
+        GameObject selectedEnvironmentPrefab =
+            GetSelectedEnvironmentPrefab();
+
+        if (selectedEnvironmentPrefab == null)
+        {
+            Debug.LogError(
+                "GameManager: No valid Environment Patch prefab " +
+                "found for Environment Index " +
+                selectedEnvironmentIndex
+            );
+
+            return;
+        }
+
+
+        Debug.Log(
+            "GameManager: Loading Environment Patch Index " +
+            selectedEnvironmentIndex +
+            " -> " +
+            selectedEnvironmentPrefab.name
+        );
+
+
+        // -----------------------------------------------------
         // CREATE 3 PATCHES
         // -----------------------------------------------------
 
         for (int i = 0; i < 3; i++)
         {
+            // IMPORTANT:
+            // Every patch uses the environment selected by PlayerPrefs.
+            //
+            // PlayerPrefs = 0
+            //     -> envPatchPrefabs[0]
+            //
+            // PlayerPrefs = 1
+            //     -> envPatchPrefabs[1]
+
             GameObject prefab =
-                GetPatchPrefab(i);
+                selectedEnvironmentPrefab;
 
 
             if (prefab == null)
             {
                 Debug.LogError(
-                    "GameManager: Environment Patch Prefab slot " +
-                    i +
-                    " is empty."
+                    "GameManager: Selected Environment Patch Prefab " +
+                    "is empty."
                 );
 
                 continue;
@@ -433,7 +486,6 @@ public class GameManager : MonoBehaviour
             GameObject instance =
                 Instantiate(prefab);
 
-
             instance.name =
                 prefab.name;
 
@@ -444,7 +496,6 @@ public class GameManager : MonoBehaviour
 
             EnvironmentPatch patch =
                 instance.GetComponent<EnvironmentPatch>();
-
 
             if (patch == null)
             {
@@ -516,7 +567,6 @@ public class GameManager : MonoBehaviour
                     firstPatchSpawnPoint =
                         patch.spawnPoint;
 
-
                     Debug.Log(
                         "GameManager: FIRST patch SpawnPoint found."
                     );
@@ -550,7 +600,10 @@ public class GameManager : MonoBehaviour
 
     public static int GetSelectedPlayerIndex()
     {
-        return PlayerPrefs.GetInt(SelectedPlayerPrefKey, 0);
+        return PlayerPrefs.GetInt(
+            SelectedPlayerPrefKey,
+            0
+        );
     }
 
 
@@ -570,7 +623,6 @@ public class GameManager : MonoBehaviour
         int selectedIndex =
             GetSelectedPlayerIndex();
 
-
         if (
             playerPrefabs != null &&
             playerPrefabs.Length > 0
@@ -583,12 +635,10 @@ public class GameManager : MonoBehaviour
                     playerPrefabs.Length - 1
                 );
 
-
             if (playerPrefabs[selectedIndex] != null)
             {
                 return playerPrefabs[selectedIndex];
             }
-
 
             for (int i = 0; i < playerPrefabs.Length; i++)
             {
@@ -599,8 +649,98 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
         return playerPrefab;
+    }
+
+
+    // =========================================================
+    // SELECTED ENVIRONMENT
+    // =========================================================
+
+    public static int GetSelectedEnvironmentIndex()
+    {
+        int index =
+            PlayerPrefs.GetInt(
+                SelectedEnvironmentPrefKey,
+                0
+            );
+
+        return Mathf.Max(0, index);
+    }
+
+
+    public static void SetSelectedEnvironmentIndex(int index)
+    {
+        PlayerPrefs.SetInt(
+            SelectedEnvironmentPrefKey,
+            Mathf.Max(0, index)
+        );
+
+        PlayerPrefs.Save();
+    }
+
+
+    GameObject GetSelectedEnvironmentPrefab()
+    {
+        if (
+            envPatchPrefabs == null ||
+            envPatchPrefabs.Length == 0
+        )
+        {
+            return null;
+        }
+
+
+        int index =
+            GetSelectedEnvironmentIndex();
+
+
+        // Clamp the PlayerPrefs value to the available
+        // Environment Patch array.
+
+        index =
+            Mathf.Clamp(
+                index,
+                0,
+                envPatchPrefabs.Length - 1
+            );
+
+
+        selectedEnvironmentIndex =
+            index;
+
+
+        if (envPatchPrefabs[index] != null)
+        {
+            return envPatchPrefabs[index];
+        }
+
+
+        // -----------------------------------------------------
+        // FALLBACK IF SELECTED SLOT IS EMPTY
+        // -----------------------------------------------------
+
+        for (int i = 0; i < envPatchPrefabs.Length; i++)
+        {
+            if (envPatchPrefabs[i] != null)
+            {
+                Debug.LogWarning(
+                    "GameManager: Environment Patch index " +
+                    index +
+                    " is empty. Using index " +
+                    i +
+                    " instead."
+                );
+
+                selectedEnvironmentIndex =
+                    i;
+
+                return envPatchPrefabs[i];
+            }
+        }
+
+
+        return null;
     }
 
 
@@ -670,7 +810,6 @@ public class GameManager : MonoBehaviour
             ),
             Quaternion.identity
         );
-
 
         patch.ResetContents();
     }
@@ -827,7 +966,6 @@ public class GameManager : MonoBehaviour
                     "GameOverScreen"
                 );
 
-
             if (found != null)
             {
                 gameOverScreen =
@@ -884,6 +1022,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+
         if (hudCoinsText == null)
         {
             Transform found =
@@ -896,6 +1035,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+
         // Legacy field fallback
         if (hudCoinsText == null && hudText != null)
             hudCoinsText = hudText;
@@ -903,7 +1043,11 @@ public class GameManager : MonoBehaviour
         if (hudScoreText == null && hudText != null)
             hudScoreText = hudText;
 
-        if (hudScoreText == null || hudCoinsText == null)
+
+        if (
+            hudScoreText == null ||
+            hudCoinsText == null
+        )
         {
             Debug.LogWarning(
                 "GameManager: Assign HUD Score and Coins TMP texts."
@@ -942,6 +1086,7 @@ public class GameManager : MonoBehaviour
 
 
         SetHudVisible(false);
+
         RefreshHud();
     }
 
@@ -966,6 +1111,7 @@ public class GameManager : MonoBehaviour
         score = 0;
         coins = 0;
 
+
         if (player != null)
         {
             runStartZ =
@@ -980,6 +1126,7 @@ public class GameManager : MonoBehaviour
 
 
         SetHudVisible(true);
+
         RefreshHud();
 
 
@@ -1175,13 +1322,16 @@ public class GameManager : MonoBehaviour
         if (hudCoinsText != null)
             hudCoinsText.gameObject.SetActive(visible);
 
-        if (hudText != null &&
+        if (
+            hudText != null &&
             hudText != hudScoreText &&
-            hudText != hudCoinsText)
+            hudText != hudCoinsText
+        )
         {
             hudText.gameObject.SetActive(visible);
         }
     }
+
 
     void RefreshHud()
     {
@@ -1204,19 +1354,37 @@ public class GameManager : MonoBehaviour
     }
 
 
+    // =========================================================
+    // EXIT
+    // =========================================================
+
     public void ExitGame()
     {
         Application.Quit();
     }
 
-     public GameObject pauseMenu;
-    public void PausedGame(){
+
+    // =========================================================
+    // PAUSE
+    // =========================================================
+
+    public GameObject pauseMenu;
+
+    public void PausedGame()
+    {
         Time.timeScale = 0;
-        pauseMenu.SetActive(true);
+
+        if (pauseMenu != null)
+            pauseMenu.SetActive(true);
     }
 
-    public void ResumeGame(){
+
+    public void ResumeGame()
+    {
         Time.timeScale = 1;
-        pauseMenu.SetActive(false);
+
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
     }
 }
+

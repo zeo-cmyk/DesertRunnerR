@@ -9,7 +9,7 @@ public enum DifficultyLevel
 
 public static class GameSettings
 {
-    public const string DifficultyPrefKey = "DifficultyLevel";
+    public const string DifficultyPrefKey = "SelectedEnvironmentIndex";
     public const string SoundPrefKey = "SoundEnabled";
 
     public static DifficultyLevel GetDifficulty()
