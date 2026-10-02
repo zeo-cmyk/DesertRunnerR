@@ -2480,6 +2480,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Track_line_type_01_30m_free
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 33bbba6bc07665640b844e1b81d2e458, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7224,7 +7228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2007204ac359ea49bc8b8330052f47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 141.435
+  length: 186.4382
   spawnPoint: {fileID: 4249602617580929493}
 --- !u!45 &9183560001123747225
 Skybox:

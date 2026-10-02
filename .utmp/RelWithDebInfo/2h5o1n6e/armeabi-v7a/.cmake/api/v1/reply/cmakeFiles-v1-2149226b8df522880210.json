@@ -41,7 +41,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
 		},
 		{
 			"isExternal" : true,
@@ -307,7 +307,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -541,7 +541,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -692,7 +692,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -786,31 +786,31 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		},
 		{
 			"path" : "GameActivity/CMakeLists.txt"
 		},
 		{
 			"isExternal" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/game-activity/game-activityConfig.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/game-activity/game-activityConfig.cmake"
 		},
 		{
 			"path" : "FramePacing/CMakeLists.txt"
 		},
 		{
 			"isExternal" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing/games-frame-pacingConfigVersion.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/games-frame-pacing/games-frame-pacingConfigVersion.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing/games-frame-pacingConfig.cmake"
+			"path" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/games-frame-pacing/games-frame-pacingConfig.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/arm64-v8a",
+		"build" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/.utmp/RelWithDebInfo/2h5o1n6e/armeabi-v7a",
 		"source" : "E:/UnityProjects/ArcadianProjects/DesertRunnerR/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
 	},
 	"version" : 
