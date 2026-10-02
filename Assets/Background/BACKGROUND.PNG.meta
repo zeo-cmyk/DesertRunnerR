@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 278fb5bd79f3d2546bae1924e54be93f
+AssetOrigin:
+  serializedVersion: 1
+  productId: 316348
+  packageName: CyberpunkSunset
+  packageVersion: 1.0
+  assetPath: Assets/Background/BACKGROUND.PNG
+  uploadId: 746623
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -107,14 +114,14 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 50
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
@@ -258,10 +265,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 316348
-  packageName: CyberpunkSunset
-  packageVersion: 1.0
-  assetPath: Assets/Background/BACKGROUND.PNG
-  uploadId: 746623
